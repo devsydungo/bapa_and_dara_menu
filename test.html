@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+    <div id="list"></div>
+    <script>
+        var allData = {
+            "Misc": {
+                "Rice": 10
+            },
+            "Main Dish": {
+                "Adobo": 15,
+                "Sisig": 15,
+                "Fried Chicken": 15,
+                "Kare-kare": 15,
+                "Chicken Tinola": 15,
+                "Sinigang": 15,
+                "Dinuguan": 15,
+                "Laing": 15,
+                "Pinakbet": 15,
+                "Pork BBQ": 10,
+                "Longaniza 3x": 15,
+                "Shanghai 3x": 15,
+                "Bicol Express": 15
+            }
+        }
+        const printData = (data, depth = 0) => {
+            var out = ``;
+            for (var i = 0; i < depth; i++) out += `   `
+            if (typeof (data) == "number") {
+                document.writeln(`${out}Price: ${data}`)
+                return 0;
+            }
+            if (typeof (data) == "string") {
+                document.writeln(`${out}${data}`)
+                return 0;
+            }
+            if (typeof (data) == "object") {
+                for (i in data) {
+                    document.writeln(`${out}${i}`)
+                    printData(data[i], depth + 1);
+                }
+                return 0;
+            }
+
+        }
+        const showData = (data) => {
+            var out;
+            if (typeof (data) == "number") {
+                var child = document.createElement('span')
+                $(child).addClass('price')
+                child.innerText = `Price:  ${data}.00`
+                if (data == 0) child.innerText = `Unavailable`
+                return child;
+            }
+            if (typeof (data) == "string") {
+                out = document.createElement('ol');
+                var child = document.createElement('li')
+                child.innerText = `${data}`
+                out.append(child)
+                return out;
+            }
+            if (typeof (data) == "object") {
+                out = document.createElement('ol');
+                for (i in data) {
+                    var child = document.createElement('li')
+                    child.innerText = `${i}[${typeof i}]`
+                    out.append(child)
+                    out.append(showData(data[i]));
+                }
+                return out;
+            }
+
+        }
+    </script>
+</body>
+
+</html>
